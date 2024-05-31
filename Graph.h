@@ -5,11 +5,11 @@
 
 class Graph {
 public:
-    int V; // Number of vertices
-    std::vector<std::vector<int>> adj; // Adjacency matrix
+    int V;
+    std::vector<std::vector<int>> adj;
 
-    Graph(int V);
-    void addEdge(int u, int v, int weight);
+    // Constructor
+    Graph(const std::vector<std::vector<int>>& adjacencyMatrix);
 };
 
 #endif // GRAPH_H
