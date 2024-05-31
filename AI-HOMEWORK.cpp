@@ -1,5 +1,7 @@
 #include <iostream>
+#include <fstream>
 #include <vector>
+#include <string>
 #include "Graph.h"
 #include "DFS.h"
 #include "UniformCostSearch.h"
@@ -8,17 +10,35 @@
 using namespace std;
 
 int main() {
-    // Create a graph with 5 vertices
-    Graph graph(5);
-    graph.addEdge(0, 1, 10);
-    graph.addEdge(0, 2, 20);
-    graph.addEdge(1, 3, 30);
-    graph.addEdge(1, 4, 40);
-    graph.addEdge(2, 3, 50);
-    graph.addEdge(3, 4, 60);
+    // Declare the input file
+    ifstream fin("input.txt");
+    if (!fin.is_open()) {
+        cerr << "Error: Unable to open input file." << endl;
+        return EXIT_FAILURE;
+    }
+
+    // Read the number of vertices from the input file
+    int numVertices;
+    fin >> numVertices;
+
+    // Create a 2D vector to store the adjacency matrix
+    vector<vector<int>> adjacencyMatrix(numVertices, vector<int>(numVertices, 0));
+
+    // Read the adjacency matrix from the input file
+    for (int i = 0; i < numVertices; ++i) {
+        for (int j = 0; j < numVertices; ++j) {
+            fin >> adjacencyMatrix[i][j];
+        }
+    }
+
+    // Close the input file
+    fin.close();
+
+    // Create a Graph object using the adjacency matrix
+    Graph graph(adjacencyMatrix);
 
     // Perform DFS traversal
-    vector<bool> visited(graph.V, false);
+    vector<bool> visited(numVertices, false);
     cout << "Depth-First Search traversal starting from vertex 0: ";
     DFS(graph, 0, visited);
     cout << endl;
